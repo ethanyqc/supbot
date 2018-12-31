@@ -27,26 +27,23 @@ def timeme(method):
         return result
     return wrapper
 
-# will cookies improve load time?
-#options = webdriver.ChromeOptions()
-#options.add_argument('user-data-dir=www.supremenewyork.com')
 
 @timeme
 def order():
     # add to cart
     selectSize = Select(driver.find_element_by_id('s'))
 
-    # select by visible text
+    # select size
     selectSize.select_by_visible_text('Medium')
 
     driver.find_element_by_name('commit').click()
 
-    # wait for checkout button element to load
+    # wait for checkout
     time.sleep(.5)
     checkout_element = driver.find_element_by_class_name('checkout')
     checkout_element.click()
 
-    # fill out checkout screen fields
+    # fill out infos
     driver.find_element_by_xpath('//*[@id="order_billing_name"]').send_keys(keys['name'])
     driver.find_element_by_xpath('//*[@id="order_email"]').send_keys(keys['email'])
     driver.find_element_by_xpath('//*[@id="order_tel"]').send_keys(keys['phone_number'])
