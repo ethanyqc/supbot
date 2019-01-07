@@ -125,7 +125,9 @@ if __name__ == '__main__':
 
     url = scrape()
     # load chrome
-    driver = webdriver.Chrome('./chromedriver')
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--disable-infobars")
+    driver = webdriver.Chrome(executable_path='./chromedriver', chrome_options=chrome_options)
     #get product url
     driver.get(url)
     order()
