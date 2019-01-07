@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import time
 import json
 import requests
-
+from selenium.common.exceptions import WebDriverException
 import sys
 
 from colorama import init
@@ -34,16 +34,33 @@ def timeme(method):
         return result
     return wrapper
 
+def check_sold_status():
+    try:
+        e = driver.find_element_by_class_name('sold-out')
+        if e.text == 'sold out':
+            return True
+        else:
+            return False
+    except NoSuchElementException:
+        return False
+    return True
+
 
 @timeme
 def order():
+
+    if check_sold_status():
+        print("Sorry, this item is sold.")
+        return
+
     # add to cart
     selectSize = Select(driver.find_element_by_id('s'))
 
     # select size
     selectSize.select_by_visible_text('Medium')
 
-    driver.find_element_by_name('commit').click()
+    add_cart = driver.find_element_by_name('commit')
+    add_cart.click()
 
     # wait for checkout
     time.sleep(.5)
@@ -88,14 +105,14 @@ def scrape():
         pname = product['name']
         pcategory = product['category_name']
         urlArr.append('http://www.supremenewyork.com/shop/'+str(pid))
-        print("         "+str((i)) + ": " + pname)
-        print("            "+'http://www.supremenewyork.com/shop/'+str(pid))
+        print(" "+str((i)) + ": " + pname)
+        print("    "+"CATEGORY: "+pcategory)
+        print("    "+"LINK: "+'http://www.supremenewyork.com/shop/'+str(pid))
         print("")
         i = i + 1
     keyword_index = int(input("Enter item index: "))
 
     return urlArr[keyword_index]
-
 
 
 
