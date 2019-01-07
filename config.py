@@ -5,8 +5,8 @@ keys = {
         "phone_number": "785-814-0110",
         "street_address": "1579 Avenue Place",
         "apt_num": "6406",
-        #"city": "Timbuktu", this is autofilled
+        "city": "Atlanta",
         "zip_code": "30329",
         "card_cvv": "7791",
-        "card_number": "3798 106004 15009"
+        "card_number": "3798 100000 51009"
 }

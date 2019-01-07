@@ -43,16 +43,19 @@ def order():
     checkout_element = driver.find_element_by_class_name('checkout')
     checkout_element.click()
 
-    # fill out infos
-    driver.find_element_by_xpath('//*[@id="order_billing_name"]').send_keys(keys['name'])
-    driver.find_element_by_xpath('//*[@id="order_email"]').send_keys(keys['email'])
-    driver.find_element_by_xpath('//*[@id="order_tel"]').send_keys(keys['phone_number'])
-    driver.find_element_by_xpath('//*[@id="bo"]').send_keys(keys['street_address'])
-    driver.find_element_by_xpath('//*[@id="oba3"]').send_keys(keys['apt_num'])
-    driver.find_element_by_xpath('//*[@id="order_billing_zip"]').send_keys(keys['zip_code'])
-    # driver.find_element_by_xpath('//*[@id="order_billing_city"]').send_keys(keys['city'])
-    driver.find_element_by_xpath('//*[@id="orcer"]').send_keys(keys['card_cvv'])
-    driver.find_element_by_id('nnaerb').send_keys(keys['card_number'])
+    input_mapping = {'order_billing_name': keys['name'],
+                    'order_email': keys['email'],
+                    'order_tel': keys['phone_number'],
+                    'bo': keys['street_address'],
+                    'oba3': keys['apt_num'],
+                    'order_billing_zip': keys['zip_code'],
+                    'orcer': keys['card_cvv'],
+                    'order_billing_city': keys['city'],
+                    'nnaerb': keys['card_number']
+                    }
+    for key, value in input_mapping.items():
+        driver.execute_script("document.getElementById('%s').setAttribute('value','%s')" % (key, value));
+
 
     selectMonth = Select(driver.find_element_by_id('credit_card_month'))
     selectMonth.select_by_value('11')
