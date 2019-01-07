@@ -6,6 +6,13 @@ import time
 import json
 import requests
 
+import sys
+
+from colorama import init
+init(strip=not sys.stdout.isatty()) # strip colors if stdout is redirected
+from termcolor import cprint
+from pyfiglet import figlet_format
+
 
 headers = {
     'Accept-Encoding': 'gzip, deflate',
@@ -75,14 +82,15 @@ def scrape():
 
     products = a['products_and_categories']
     urlArr = []
-    print("All the new item:")
+    print("LATEST DROPS(select index to buy):")
     for product in products['new']:
         pid = product['id']
         pname = product['name']
         pcategory = product['category_name']
         urlArr.append('http://www.supremenewyork.com/shop/'+str(pid))
-        print(str((i)) + ": " + pname)
-        print('http://www.supremenewyork.com/shop/'+str(pid))
+        print("         "+str((i)) + ": " + pname)
+        print("            "+'http://www.supremenewyork.com/shop/'+str(pid))
+        print("")
         i = i + 1
     keyword_index = int(input("Enter item index: "))
 
@@ -92,6 +100,11 @@ def scrape():
 
 
 if __name__ == '__main__':
+    # show logo
+    print(" ")
+    print(" ")
+    cprint(figlet_format('SUPREME BOT', font='standard'),
+       'white', attrs=['bold'])
 
     url = scrape()
     # load chrome
