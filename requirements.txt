@@ -1,5 +1,5 @@
 selenium==3.14.1
-urllib3==1.23
+urllib3==1.24.2
 requests
 bs4
 time
